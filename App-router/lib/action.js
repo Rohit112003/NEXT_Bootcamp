@@ -1,0 +1,16 @@
+'use server';
+
+export async  function shareMeal(formData){
+    //a function that guranteed to excute on the server and only there (which only execute on server)
+   
+    const meal = {
+        title:formData.get('title'),
+        summary:formData.get('summary'),
+        instructions:formData.get('instructions'),
+        image:formData.get('image'),
+        creator:formData.get('name'),
+        creator_email:formData.get('email')
+    }
+    console.log(meal)
+     
+}
