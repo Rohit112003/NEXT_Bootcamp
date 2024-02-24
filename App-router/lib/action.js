@@ -1,4 +1,6 @@
 'use server';
+import { redirect } from "next/dist/server/api-utils";
+import { saveMeal } from "./meals";
 
 export async  function shareMeal(formData){
     //a function that guranteed to excute on the server and only there (which only execute on server)
@@ -11,6 +13,7 @@ export async  function shareMeal(formData){
         creator:formData.get('name'),
         creator_email:formData.get('email')
     }
-    console.log(meal)
+   await saveMeal(meal);
+   redirect('/meals');
      
 }
