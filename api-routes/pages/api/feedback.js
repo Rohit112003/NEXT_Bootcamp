@@ -2,10 +2,14 @@ import { json } from "body-parser";
 import fs from "fs";
 import path from "path";
 
-function buildFilePath() {
+export function buildFilePath() {
   return path.join(process.cwd(), "data", "feedback.json");
 }
-function extractFeddback(filePath) {
+export function extractFeddback(filePath) {
+    if (!filePath) {
+        throw new Error("File path is undefined");
+      }
+    
   const fileData = fs.readFileSync(filePath);
   const data = JSON.parse(fileData);
   return data;
