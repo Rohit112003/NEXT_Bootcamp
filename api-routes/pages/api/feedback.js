@@ -1,6 +1,15 @@
 import { json } from "body-parser";
 import fs from "fs";
 import path from "path";
+
+function buildFilePath() {
+  return path.join(process.cwd(), "data", "feedback.json");
+}
+function extractFeddback(filePath) {
+  const fileData = fs.readFileSync(filePath);
+  const data = JSON.parse(fileData);
+  return data;
+}
 function handler(req, res) {
   if (res.method === "POST") {
     const email = req.body.email;
@@ -10,20 +19,25 @@ function handler(req, res) {
       email: email,
       text: feedback,
     };
-    //store that in a databse or in a file
-    const filePath = path.join(process.cwd(), "data", "feedback.json");
-    const fileData = fs.readFileSync(filePath);
-    const data = JSON.parse(fileData);
+    const filePath = buildFilePath();
+
+    const data = extractFeddback(filePath);
     data.push(newFeedback);
     fs.writeFileSync(filePath, JSON.stringify(data));
     res.status(201).json({
       message: "success",
       feedback: newFeedback,
     });
-  }else{
+  } else {
+    const filePath = buildFilePath();
+    const data = extractFeddback(filePath);
     res.status(404).json({
-        status: "This works",
-      });
+        //now , we hhave to keep in mind that we are sending back will be an 
+        //object with  a feedback property which holds the actual ata parsed from the 
+        //feedback json file
+      feedback:data,
+    });
   }
 }
+
 export default handler;
