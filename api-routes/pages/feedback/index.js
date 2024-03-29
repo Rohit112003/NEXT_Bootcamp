@@ -10,6 +10,8 @@ function FeedbackPage(props){
 
     }
     return (
+        <Fragment>
+            {feedbackData && <p>{feedbackData.email}</p>}
         <ul>
             {props.feedbackItems.map((item)=>(
                 // Bind in the end allows us to pre-configure this function So it does not execute the function yet,but it pre-configures it for future execution.
@@ -17,6 +19,7 @@ function FeedbackPage(props){
                 
            ))}
         </ul>
+        </Fragment>
     )
 }
 
